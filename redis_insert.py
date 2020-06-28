@@ -26,7 +26,19 @@ for i in range(0,300024):
     })
     pipe.sadd('employees', 'emp_no:' + str(employees['emp_no'][i]))
 
-print("Start inserting...")
+print("Inserting 300024 records...")
 start_time = time.time()
 pipe.execute()
-print("[REDIS INSERT] Execution time: %s" % (time.time() - start_time))
+print("[REDIS BULK INSERT] Execution time: %s" % (time.time() - start_time))
+
+print("Inserting single records...")
+start_time = time.time()
+r.hset(name = 'emp_no:500000',
+mapping = {
+    'birth_date': '1/1/60',
+    'first_name': 'John',
+    'last_name': 'Doe',
+    'gender': 'F',
+    'hire_date': '10/20/20'
+})
+print("[REDIS SINGLE INSERT] Execution time: %s" % (time.time() - start_time))
