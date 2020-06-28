@@ -26,7 +26,7 @@ for i in range(0,300024):
     })
     pipe.sadd('employees', 'emp_no:' + str(employees['emp_no'][i]))
 
-print("Start adding to redis database!")
+print("Start inserting...")
 start_time = time.time()
 pipe.execute()
 print("[REDIS INSERT] Execution time: %s" % (time.time() - start_time))
