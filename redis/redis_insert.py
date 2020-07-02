@@ -17,13 +17,12 @@ print("--- WORKING ON 300.024 RECORDS ---")
 lua_file = open("../redis-script/redis_emp_insert.lua", "r")
 script = lua_file.read()
 
-manager = mul.Manager()
-params_list = manager.list()
+emp_list = []
 
 employees = pd.read_csv("../employees.csv")
 
 def importEmp(i):
-    params_list.append("emp_no:" + str(employees['emp_no'][i]) +
+    emp_list.append("emp_no:" + str(employees['emp_no'][i]) +
     ",birth_day," + employees['birth_date'][i] +
     ",first_name," + employees['first_name'][i] + 
     ",last_name," + employees['last_name'][i] +
@@ -31,14 +30,15 @@ def importEmp(i):
     ",hire_date," + employees['hire_date'][i])
 
 print("Import data from employees.csv...")
-p = mul.Pool(mul.cpu_count())
 start_time = time.time()
-p.map(importEmp, range(0,300024))
+for i in range (0, 300024):
+    importEmp(i)
+
 print("Importing time: %s" % (time.time() - start_time))
 
 print("Start inserting...")
 start_time = time.time()
-r.eval(script, 300024, *params_list)
+r.eval(script, 300024, *emp_list)
 print("[REDIS BULK INSERT] Execution time: %s" % (time.time() - start_time))
 
 lua_file.close()
@@ -58,17 +58,19 @@ def importSala(i):
     ",salary," + str(salaries['salary'][i]) +
     ",to_date," + salaries['to_date'][i])
 
+print("Import data from salaries.csv...")
 p = mul.Pool(mul.cpu_count())
 start_time = time.time()
 p.map(importSala, range(0,2844047))
+sala_list = list(params_list)
 print("Importing time: %s" % (time.time() - start_time))
 
 print("Start inserting...")
 start_time = time.time()
-r.eval(script, 700000, *params_list[:700000])
-r.eval(script, 700000, *params_list[700000:1400000])
-r.eval(script, 700000, *params_list[1400000:2100000])
-r.eval(script, 744047, *params_list[2100000:])
+r.eval(script, 700000, *sala_list[:700000])
+r.eval(script, 700000, *sala_list[700000:1400000])
+r.eval(script, 700000, *sala_list[1400000:2100000])
+r.eval(script, 744047, *sala_list[2100000:])
 print("[REDIS BULK INSERT] Execution time: %s" % (time.time() - start_time))
 
 lua_file.close()
