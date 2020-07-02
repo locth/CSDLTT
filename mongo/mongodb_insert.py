@@ -7,7 +7,7 @@ client = MongoClient()
 db = client['employees']
 
 print("--- WORKING ON 300.024 RECORDS ---")
-emp_collection = db['employees']
+emp_collection = db['employees2']
 
 data = pd.read_csv("employees.csv")
 employees_dict = data.to_dict('records')
@@ -17,7 +17,7 @@ start_time = time.time()
 emp_collection.insert_many(employees_dict)
 print("[MONGO BULK INSERT] Execution time: %s" %(time.time()-start_time))
 
-print("Inserting single records...")
+# print("Inserting single records...")
 emp_rec = {
     "emp_no": 500000,
     "birth_date": "1/1/60",

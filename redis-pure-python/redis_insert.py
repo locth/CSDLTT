@@ -5,10 +5,10 @@ import time
 r = redis.Redis(
     host='127.0.0.1',
     port=6379,
-    password=''
+    password='',
 )
 
-pipe = r.pipeline()
+pipe = r.pipeline(transaction=False)
 
 print("--- WORKING ON 300.024 RECORDS ---")
 employees = pd.read_csv("employees.csv")
