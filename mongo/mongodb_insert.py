@@ -7,7 +7,7 @@ client = MongoClient()
 db = client['employees']
 
 print("--- WORKING ON 300.024 RECORDS ---")
-emp_collection = db['employees2']
+emp_collection = db['employees']
 
 data = pd.read_csv("../employees.csv")
 employees_dict = data.to_dict('records')
