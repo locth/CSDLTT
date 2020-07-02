@@ -31,8 +31,10 @@ def importEmp(i):
     ",hire_date," + employees['hire_date'][i])
 
 print("Import data from employees.csv...")
-p = mul.Pool(10)
+p = mul.Pool(mul.cpu_count())
+start_time = time.time()
 p.map(importEmp, range(0,300024))
+print("Importing time: %s" % (time.time() - start_time))
 
 print("Start inserting...")
 start_time = time.time()
@@ -56,10 +58,10 @@ def importSala(i):
     ",salary," + str(salaries['salary'][i]) +
     ",to_date," + salaries['to_date'][i])
 
-p = mul.Pool(10)
+p = mul.Pool(mul.cpu_count())
 start_time = time.time()
 p.map(importSala, range(0,2844047))
-print("POOLING Execution time: %s" % (time.time() - start_time))
+print("Importing time: %s" % (time.time() - start_time))
 
 print("Start inserting...")
 start_time = time.time()
