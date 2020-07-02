@@ -39,7 +39,7 @@ print("Importing time: %s" % (time.time() - start_time))
 print("Start inserting...")
 start_time = time.time()
 r.eval(script, 300024, *emp_list)
-print("[REDIS BULK INSERT] Execution time: %s" % (time.time() - start_time))
+print("[REDIS INSERT BY LUA] Execution time: %s" % (time.time() - start_time))
 
 lua_file.close()
 
@@ -71,6 +71,6 @@ r.eval(script, 700000, *sala_list[:700000])
 r.eval(script, 700000, *sala_list[700000:1400000])
 r.eval(script, 700000, *sala_list[1400000:2100000])
 r.eval(script, 744047, *sala_list[2100000:])
-print("[REDIS BULK INSERT] Execution time: %s" % (time.time() - start_time))
+print("[REDIS INSERT BY LUA] Execution time: %s" % (time.time() - start_time))
 
 lua_file.close()
