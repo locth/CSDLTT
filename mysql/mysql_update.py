@@ -4,7 +4,7 @@ import time
 mydb = mysql.connector.connect(
   host="localhost",
   user="root",
-  password="123",
+  password="hoangvanhieu",
   database="testdb"
 )
 
@@ -20,8 +20,7 @@ emp_no_list = mycursor.fetchall()
 sql = "UPDATE employees SET nationality = 'USA' WHERE emp_no = %s"
 start_time = time.time()
 for x in emp_no_list:
-  val = (x[0],)
-  mycursor.execute(sql, val)
+  mycursor.execute(sql, (x[0],))
 mydb.commit()
 print("[MYSQL UPDATE] Execution time: %s" %(time.time() - start_time))
 
@@ -32,7 +31,6 @@ sala_no_list = mycursor.fetchall()
 sql = "UPDATE salaries SET salary = salary + 10000 WHERE emp_no = %s AND from_date = %s"
 start_time = time.time()
 for x in sala_no_list:
-  val = (x[0], x[1])
-  mycursor.execute(sql, val)
+  mycursor.execute(sql, (x[0], x[1]))
 mydb.commit()
 print("[MYSQL UPDATE] Execution time: %s" %(time.time() - start_time))

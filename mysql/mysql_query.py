@@ -4,7 +4,7 @@ import time
 mydb = mysql.connector.connect(
   host="localhost",
   user="root",
-  password="123",
+  password="hoangvanhieu",
   database="testdb"
 )
 
@@ -17,8 +17,7 @@ emp_no_list = mycursor.fetchall()
 sql = "SELECT * FROM employees WHERE emp_no = %s"
 start_time = time.time()
 for x in emp_no_list:
-  val = (x[0],)
-  mycursor.execute(sql, val)
+  mycursor.execute(sql, (x[0],))
 print("[MYSQL QUERY] Execution time: %s" %(time.time() - start_time))
 
 print("--- WORKING ON 2.844.047 RECORDS ---")
@@ -28,6 +27,5 @@ sala_no_list = mycursor.fetchall()
 sql = "SELECT * FROM salaries WHERE emp_no = %s AND from_date = %s"
 start_time = time.time()
 for x in sala_no_list:
-  val = (x[0], x[1])
-  mycursor.execute(sql, val)
+  mycursor.execute(sql, (x[0], x[1]))
 print("[MYSQL QUERY] Execution time: %s" %(time.time() - start_time))
